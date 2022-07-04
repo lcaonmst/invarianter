@@ -1,0 +1,9 @@
+<h4>Here you can choose focus:</h4><br>
+{% for section in sections %}
+
+<div class="Section">
+  <div class="Section-hide" id="{{ forloop.counter }}">Section{{ forloop.counter }}<br></div>
+  <div class="Section-content" id="{{ forloop.counter }}">{{ section }}</div><br>
+</div>
+
+{% endfor %}

@@ -1,0 +1,273 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* First color type */
+:root {
+    --background: gainsboro;
+    --menu-background: #a0a0a0;
+    --menu-text: white;
+    --onclickbox: #404040;
+    --input-text: #e0e0e0;
+    --input-background: #404040;
+    --focus-text: gainsboro;
+    --focus-background: #4a4a4a;
+    --file-background: #5a5a5a;
+    --file-text: gainsboro;
+    --tab-background: #202020;
+    --tab-text: #e0e0e0;
+}
+
+/* second color type */
+
+.light {
+    --background: black;
+    --menu-background: #b3e6ff;
+    --menu-text: #142114;
+    --onclickbox: #e6f5ff;
+    --input-text: black;
+    --input-background: #d8e3d8;
+    --focus-text: black;
+    --focus-background: #ccffeb;
+    --file-background: #99ffd6;
+    --file-text: black;
+    --tab-background: #80d4ff;
+    --tab-text: black;
+}
+
+
+/* background */
+body {
+    background-color: var(--background);
+}
+
+/* definition of shape of website */
+.grid-container {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr 1fr 1fr;
+    grid-template-rows: 0.3fr 2.5fr 0.1fr 1.1fr;
+    gap: 0 0;
+    width: 99vw;
+    height: 99vh;
+}
+
+/* menu-bar shape and positioning */
+.Menu-bar {
+    grid-area: 1 / 1 / 2 / 5;
+    background-color: var(--menu-background);
+    margin: 5px;
+    border: 2px solid black;
+}
+
+/* menu-bar table of links */
+.Menu-bar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* menu-bar single rectangle */
+.Menu-bar li {
+    float: left;
+}
+
+/* menu-bar single link */
+.Menu-bar a {
+    display: block;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--menu-text);
+}
+
+.Menu-bar div {
+    display: block;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--menu-text);
+}
+
+/* menu-bar rectangle under the mouse */
+.Menu-bar a:hover {
+    background-color: var(--onclickbox);
+}
+
+/* text-field on the middle of website */
+.Text-field {
+    grid-area: 2 / 2 / 3 / 4;
+    background-color: var(--input-background);
+    margin: 5px;
+    padding: 5px;
+    overflow: auto;
+}
+
+/* place for writing code */
+#c-code {
+    width: 100%;
+    height: 100%;
+    background-color: var(--input-background);
+    font-family: "Courier New", Courier, monospace;
+    color: var(--input-text);
+    resize: none;
+    padding: 5px;
+    border: var(--background) 2px solid;
+}
+
+/* focus-bar on the right of website */
+.Focus-bar {
+    grid-area: 2 / 4 / 3 / 5;
+    background-color: var(--focus-background);
+    margin: 5px;
+    padding: 10px;
+    color: var(--focus-text);
+    border: 2px solid black;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* focus-bar title */
+.Focus-bar h4 {
+    border-bottom: var(--focus-text) solid 2px;
+}
+
+/* file-selection on the left of website */
+.File-selection {
+    grid-area: 2 / 1 / 5 / 2;
+    background-color: var(--file-background);
+    margin: 5px;
+    color: var(--file-text);
+    padding: 10px;
+    border: 2px solid black;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 0;
+}
+
+.File-selection-files {
+    padding-right: 100em;
+    text-decoration: none;
+    border: black solid 1px;
+    color: var(--file-text);
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    margin: 1px;
+}
+
+.Section-hide {
+    padding-right: 100em;
+    text-decoration: none;
+    border: black solid 1px;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    margin: 1px;
+}
+
+[mytype='file'] {
+    font-style: italic;
+}
+
+[mytype='directory'] {
+    font-weight: bold;
+}
+
+.File-selection-add {
+    margin: 5px 10px;
+    text-decoration: none;
+    color: var(--file-text);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.File-tree {
+    list-style-type: none;
+    color: black;
+    text-decoration: none;
+}
+
+.File-tree p:hover {
+    background-color: var(--input-background);
+}
+
+.File-options {
+    margin-top: 30px;
+}
+
+/* file-selection title */
+.File-selection h4 {
+    border-bottom: var(--file-text) solid 2px;
+    margin-bottom: 20px;
+}
+
+/* place for tabs buttons */
+.Data-tabs {
+    grid-area: 3 / 2 / 4 / 5;
+    background-color: var(--background);
+    margin-left: 10px;
+    z-index: -2;
+}
+
+/* tab buttons */
+.Overlap {
+    background-color: white;
+    float: left;
+    vertical-align: sub;
+    display: block;
+    border-radius: 10px;
+    padding: 5px 5%;
+    border: black 2px solid;
+    position: relative;
+    top: 7px;
+    z-index: -1;
+    height: 100%;
+}
+
+/* place for data on the bottom of website */
+.Tabs {
+    grid-area: 4 / 2 / 5 / 5;
+    background-color: var(--tab-background);
+    color: var(--tab-text);
+    margin: 0 5px 5px;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.Create-dir iframe {
+    width: 95%;
+    height: 95%;
+}
+
+/* definition of website shape in case of mobile device */
+@media screen and (max-width: 1000px) {
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 0.4fr 0.5fr 0.4fr 3.4fr 0.3fr 1fr;
+        gap: 0 0;
+        grid-template-areas:
+    "Menu-tab Menu-tab Menu-tab Menu-tab"
+    "File-selection File-selection File-selection File-selection"
+    "Focus-bar Focus-bar Focus-bar Focus-bar"
+    "Text-field Text-field Text-field Text-field"
+    "Data-tabs Data-tabs Data-tabs Data-tabs"
+    "Tabs Tabs Tabs Tabs";
+    }
+
+    .Menu-tab { grid-area: Menu-tab; }
+
+    .File-selection { grid-area: File-selection; }
+
+    .Focus-bar { grid-area: Focus-bar; }
+
+    .Text-field {
+        grid-area: Text-field;
+    }
+
+    .Data-tabs { grid-area: Data-tabs; }
+
+    .Tabs { grid-area: Tabs; }
+}

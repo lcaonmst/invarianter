@@ -1,0 +1,423 @@
+<script>
+    const common_info = 'Here you will find all your files:';
+    const delete_info = 'Choose file or directory to remove:';
+
+    let delete_mode = false;
+    let light = false;
+    let token = "{{ csrf_token }}";
+    let current_file = "#";
+    let editor = null;
+    let isEnglish = true;
+    // let old_color = '#4a4a4a';
+    // let new_color = '#404040';
+    // let light_old_color = '#99ffd6';
+    // let light_new_color = '#e6f5ff';
+
+
+
+    // require([
+    //     "cm/lib/codemirror", "cm/mode/htmlmixed/htmlmixed"
+    // ], function(CodeMirror) {
+    //     CodeMirror.fromTextArea(document.getElementById("code"), {
+    //         lineNumbers: true,
+    //         mode: "htmlmixed"
+    //     });
+    // });
+
+    function swapSection(currPref, newPref) {
+        let ind = 1;
+        while (true) {
+            let elem = $('.Focus-bar').find('.Section-hide[id=' + ind + ']');
+            if (elem.length === 0) {
+                break;
+            }
+            if (elem.text().length <= currPref.length || elem.text().substr(0, currPref.length) !== currPref) {
+                break;
+            }
+            elem.text(newPref + ind);
+            ind++;
+        }
+    }
+
+    function handleIFrameLang() {
+        const iframe = $("iframe").contents();
+        const title = $('.Create-dir').attr('title');
+        if (!isEnglish && title === 'Add file') {
+            changeIFrameTitle('Dodaj plik');
+        }
+        else if (!isEnglish && title === 'Add directory') {
+            changeIFrameTitle('Dodaj katalog')
+        }
+        else if (isEnglish && title === 'Dodaj plik') {
+            changeIFrameTitle('Add file');
+        }
+        else if (isEnglish && title === 'Dodaj katalog') {
+            changeIFrameTitle('Add directory');
+        }
+        if (isEnglish) {
+            const nameSel = $(iframe).find('label[for=id_name]');
+            if (nameSel.length !== 0) {
+                nameSel.text("Name:");
+            }
+
+            const descriptionSel = $(iframe).find('label[for=id_description]');
+            if (descriptionSel.length !== 0) {
+                descriptionSel.text("Description:");
+            }
+
+            const parentSel = $(iframe).find('label[for=id_parent]');
+            if (parentSel.length !== 0) {
+                parentSel.text("Parent:");
+            }
+
+            const usernameSel = $(iframe).find('label[for=id_username]');
+            if (usernameSel.length !== 0) {
+                usernameSel.text("Username:");
+            }
+
+            const passwordSel = $(iframe).find('label[for=id_password]');
+            if (passwordSel.length !== 0) {
+                passwordSel.text("Password:");
+            }
+
+            const loginInfo = $(iframe).find('p');
+            if (loginInfo.length !== 0 && loginInfo.text() === 'Proszę zaloguj się by zobaczyć tę stronę.') {
+                loginInfo.text('Please login to see this page.');
+            }
+        }
+        else {
+            const nameSel = $(iframe).find('label[for=id_name]');
+            if (nameSel.length !== 0) {
+                nameSel.text("Nazwa:");
+            }
+
+            const descriptionSel = $(iframe).find('label[for=id_description]');
+            if (descriptionSel.length !== 0) {
+                descriptionSel.text("Deskrypcja:");
+            }
+
+            const parentSel = $(iframe).find('label[for=id_parent]');
+            if (parentSel.length !== 0) {
+                parentSel.text("Rodzic:");
+            }
+
+            const usernameSel = $(iframe).find('label[for=id_username]');
+            if (usernameSel.length !== 0) {
+                usernameSel.text("Nazwa użytkownika:");
+            }
+
+            const passwordSel = $(iframe).find('label[for=id_password]');
+            if (passwordSel.length !== 0) {
+                passwordSel.text("Hasło:");
+            }
+
+            const loginInfo = $(iframe).find('p');
+            if (loginInfo.length !== 0 && loginInfo.text() === 'Please login to see this page.') {
+                loginInfo.text('Proszę zaloguj się by zobaczyć tę stronę.');
+            }
+        }
+    }
+
+    function handleSectionLang() {
+        if (isEnglish) {
+            $('.Focus-bar').find('h4').text("Here you can choose focus:");
+            swapSection('Sekcja', 'Section');
+        }
+        else {
+            $('.Focus-bar').find('h4').text("Tutaj możesz wybrać swoje skupienia:");
+            swapSection('Section', 'Sekcja');
+        }
+    }
+
+    function handleLang() {
+        polishLang();
+        englishLang();
+    }
+
+    function polishLang() {
+        if (!isEnglish) {
+            return;
+        }
+        $(document).ready(function () {
+            isEnglish = false;
+            $('a[href=#home]').text("Dom");
+            $('a[href=#news]').text("Pracownia");
+            $('a[href=#contact]').text("Kontakt");
+            $('a[href=#about]').text("O");
+            $('h4[class=File-mode]').text("Tutaj znajdziesz wszystkie swoje pliki:");
+            $('.File-selection-add[id=directory]').text("Dodaj katalog +");
+            $('.File-selection-add[id=file]').text("Dodaj plik +");
+            $('.File-selection-add[id=delete]').text("Usuń -");
+            $('.File-selection-add[id=recover]').text("Odzyskaj");
+            $('.File-selection-add[id=refresh]').text("Odśwież");
+            $('.File-selection-add[id=color]').text("Zmień kolorów wersję");
+            $('.File-selection-add[id=logout]').text("Wyloguj się");
+            $('.Tabs').html('Trochę danych 1<br>Trochę danych 2<br>Trochę danych 3<br>');
+            handleSectionLang();
+            handleIFrameLang();
+        })
+    }
+
+    function englishLang() {
+        if (isEnglish) {
+            return;
+        }
+        $(document).ready(function () {
+            isEnglish = true;
+            $('a[href=#home]').text("Home");
+            $('a[href=#news]').text("Workspace");
+            $('a[href=#contact]').text("Contact");
+            $('a[href=#about]').text("About");
+            $('h4[class=File-mode]').text("Here you will find all your files:");
+            $('.File-selection-add[id=directory]').text("Add directory +");
+            $('.File-selection-add[id=file]').text("Add file +");
+            $('.File-selection-add[id=delete]').text("Delete -");
+            $('.File-selection-add[id=recover]').text("Recover");
+            $('.File-selection-add[id=refresh]').text("Refresh");
+            $('.File-selection-add[id=color]').text("Change color version");
+            $('.File-selection-add[id=logout]').text("Log out");
+            $('.Tabs').html('Some data 1<br>Some data 2<br>Some data 3<br>');
+            handleSectionLang();
+            handleIFrameLang();
+        })
+    }
+
+    $(document).ready(function() {
+        let textarea = document.getElementById('c-code');
+        editor = CodeMirror.fromTextArea(textarea, {
+            mode: 'text/x-csrc',
+            lineNumbers: true,
+            matchBrackets: true,
+            theme: 'blackboard'
+        })
+        editor.setSize('100%', '100%');
+    })
+
+    function changeIFrameTitle(name) {
+        $('.Create-dir').attr('title', name);
+        $('iframe').attr('title', name);
+        $('#dialog1').dialog({title: name})
+        handleIFrameLang();
+    }
+
+
+    function checkLoop() {
+        handleIFrameLang();
+        let new_token = $('iframe').contents().find('meta[name=Token]').attr('content');
+        if (new_token != null && new_token.length > 0) {
+            token = new_token;
+        }
+        let iframeTitle = $("iframe").contents().find("meta[name=Success]").attr('content');
+        if (iframeTitle === 'Success') {
+            $('#dialog1').dialog('close');
+        }
+        else {
+            if (delete_mode) {
+                reloadDirsDelete();
+            }
+            else {
+                reloadDirs();
+            }
+        }
+    }
+
+
+    $(document).ready(function () {
+        $(function () {
+            $('#dialog1').dialog({
+                autoOpen: false,
+                close: reloadDirs,
+                width: 400,
+                height: 300,
+                resizable: false
+            });
+            $(document).on('click', "[class=File-selection-add][id=directory]", (function() {
+                $('iframe').attr('src', 'new/directory');
+                changeIFrameTitle('Add directory');
+                $("#dialog1").dialog('open');
+            }));
+        });
+    })
+
+
+    $(document).ready(function () {
+        $(function () {
+            $(document).on('click', "[class=File-selection-add][id=file]", (function() {
+                $('iframe').attr('src', 'new/file');
+                changeIFrameTitle('Add file');
+                $("#dialog1").dialog('open');
+            }));
+        });
+    })
+
+
+    function reloadDirs() {
+        return $.ajax({
+            type: "POST",
+            url: "{% url 'dirs template' %}",
+            data: {
+                csrfmiddlewaretoken: token
+            },
+            success: function(result) {
+                $('.Tree').html(result);
+                handleSectionLang();
+                delete_mode = false;
+                $('.File-mode').text(common_info);
+                // $(current_file).css('background-color', 'black');
+            }
+        });
+    }
+
+
+    function reloadDirsDelete() {
+        return $.ajax({
+            type: "POST",
+            url: "{% url 'dirs template' %}",
+            data: {
+                csrfmiddlewaretoken: token
+            },
+            success: function(result) {
+                $('.Tree').html(result);
+                handleSectionLang();
+                delete_mode = true;
+                $('.File-mode').text(delete_info);
+                // $(current_file).css('background-color', 'black');
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $(document).on('click', '[class=File-selection-add][id=delete]', reloadDirsDelete);
+    })
+
+
+    $(document).ready(function () {
+        $(document).on('click', '[class=File-selection-add][id=recover]', (function () {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'recover' %}",
+                data: {
+                    csrfmiddlewaretoken: token
+                },
+                success: reloadDirs
+            });
+        }))
+    })
+
+
+    $(document).ready(function () {
+        $(document).on('click', '[class=File-selection-add][id=refresh]', reloadDirs);
+    })
+
+
+    $(document).ready(function () {
+        $(document).on('click', '[class=File-selection-add][id=color]', function() {
+            if (light) {
+                $(document.body).attr('class', '');
+            }
+            else {
+                $(document.body).attr('class', 'light');
+            }
+            light = !light;
+        });
+    })
+
+
+    $(document).ready(function () {
+        $(document).on('click', '[class=File-selection-add][id=logout]', (function () {
+            $.ajax({
+                type: "POST",
+                url: "{% url 'logout' %}",
+                data: {
+                    csrfmiddlewaretoken: token
+                },
+                success: function(result) {
+                    let new_token = $(result).find('meta[name=token]').attr('content');
+                    if (new_token != null && new_token > 0) {
+                        token = new_token;
+                    }
+                    if (delete_mode) {
+                        reloadDirsDelete();
+                    }
+                    else {
+                        reloadDirs();
+                    }
+//                    $('#c-code').text('');
+                    editor.setValue('');
+                    $('.Focus-bar').text('');
+                }
+            });
+        }))
+    })
+
+
+    $(document).ready(function() {
+        $(document).on('click', '[class=Section-hide]', function() {
+            console.log('siema siema')
+            let id = $(this).attr('id')
+            let obj = $(this).parent().find('[class=Section-content][id=' + id + ']')
+            console.log($(this).text());
+            if ($(obj).is(':hidden')) {
+                $(obj).show();
+            }
+            else {
+                $(obj).hide();
+            }
+        })
+    })
+
+
+        $(document).ready(function () {
+            $(document).on('click', '[class=File-selection-files]', (function() {
+                if (!delete_mode) {
+                    // $(current_file).css('background-color', '--file-background');
+                    // current_file = '#' + $(this).attr('id');
+                    // $(current_file).css('background-color', 'black');
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'index' %}uploads/" + $(this).text(),
+                        data: {
+                            csrfmiddlewaretoken: token
+                        },
+                        success: function (result) {
+                            reloadDirs();
+                            editor.setValue(result);
+//                            $('#c-code').text(result);
+                        }
+                    })
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'index' %}sections/" + $(this).text(),
+                        data: {
+                            csrfmiddlewaretoken: token
+                        },
+                        success: function(result) {
+                            $('.Focus-bar').html(result);
+                            handleSectionLang();
+                        }
+                    })
+                }
+                else {
+                    // $(current_file).css('background-color', '--file-background');
+                    // current_file = '#';
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'index' %}delete/" + $(this).text(),
+                        data: {
+                            csrfmiddlewaretoken: token
+                        },
+                        success: function() {
+                            reloadDirs();
+                            delete_mode = false;
+                        }
+                    })
+                }
+                console.log(current_file);
+            })
+        )})
+
+
+
+
+</script>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projekt AWWW</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <script src="../../static/CodeMirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../../static/CodeMirror/lib/codemirror.css">
+    <script src="../../static/CodeMirror/mode/clike/clike.js"></script>
+    <link rel="stylesheet" href="../../static/CodeMirror/doc/docs.css">
+    <script src="../../static/CodeMirror/addon/edit/matchbrackets.js"></script>
+    <link rel="stylesheet" href="../../static/CodeMirror/addon/hint/show-hint.css">
+    <script src="../../static/CodeMirror/addon/hint/show-hint.js"></script>
+    <link rel="stylesheet" href="../../static/CodeMirror/theme/blackboard.css">
+
+
+    {% include 'invarianterC/dir_functions.html' %}
+
+
+<!--    <link rel="stylesheet" href="{{ STATIC_URL }}/css/style.css"> -->
+</head>
+<!-- Remove class to get dark theme -->
+<body>
+
+
+
+    <div class="grid-container">
+        <div class="Create-dir" id="dialog1" title="Add file">
+            <iframe src="new/file" title="Add file" onLoad = 'checkLoop()'></iframe>
+        </div>
+
+        <div class="Menu-bar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">Workspace</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+                <li><div onclick="englishLang()">English</div></li>
+                <li><div onclick="polishLang()">Polski</div></li>
+            </ul>
+        </div>
+        <div class="Text-field">
+            <label for="c-code"></label>
+            <textarea spellcheck="false" id="c-code" name="c-code">{{ file }}</textarea>
+        </div>
+        <div class="Focus-bar"></div>
+        <div class="File-selection">
+            <div class="Tree">
+            {% include 'invarianterC/dirs.html' %}
+                </div>
+            <div class="File-options">
+        <div class="File-selection-add" id="directory">Add directory +</div><br>
+        <div class="File-selection-add" id="file">Add file +</div><br>
+        <div class="File-selection-add" id='delete'>Delete -</div><br>
+        <div class="File-selection-add" id='recover'>Recover</div><br>
+        <div class="File-selection-add" id='refresh'>Refresh</div><br>
+        <div class="File-selection-add" id="color">Change color version</div>
+        <div class="File-selection-add" id="logout">Log out</div>
+    </div>
+        </div>
+        <div class="Data-tabs">
+            <div class="Overlap">Tab1</div>
+            <div class="Overlap">Tab2</div>
+            <div class="Overlap">Tab3</div>
+            <div class="Overlap">Tab4</div>
+        </div>
+        <div class="Tabs">
+            Some data 1<br>
+            Some data 2<br>
+            Some data 3<br>
+        </div>
+    </div>
+
+</body>
+</html>

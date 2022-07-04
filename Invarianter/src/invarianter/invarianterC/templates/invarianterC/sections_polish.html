@@ -1,0 +1,9 @@
+<h4>Tutaj możesz wybrać swoje skupienia:</h4><br>
+{% for section in sections %}
+
+<div class="Section">
+  <div class="Section-hide" id="{{ forloop.counter }}">Sekcja{{ forloop.counter }}<br></div>
+  <div class="Section-content" id="{{ forloop.counter }}">{{ section }}</div><br>
+</div>
+
+{% endfor %}

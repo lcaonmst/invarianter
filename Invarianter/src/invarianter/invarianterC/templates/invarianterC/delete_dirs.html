@@ -1,0 +1,15 @@
+<h4>Choose file or directory to remove:</h4> <br>
+<div class="File-tree">
+        {% for section in recList %}
+                <a href={% url 'delete current' section.2 %} class="File-selection-files" id={{ forloop.counter }} style="margin-left: {{ section.1 }}em">{{ section.0.name }}</a><br>
+                <!--<a href="#" class="File-selection-files File-selection-add" style="margin-left: {{ section.1|add:"1" }}em">Add+</a><br>-->
+        {% endfor %}
+</div>
+<div class="File-tree">
+    <br>
+    <a href={% url 'new directory' %} class="File-selection-add">Add directory +</a><br>
+    <a href={% url 'new file' %} class="File-selection-add">Add file +</a><br>
+    <div class="File-selection-add" id='delete'>Delete -</div><br>
+    <div class="File-selection-add" id='recover'>Recover</div><br>
+    <div class="File-selection-add" id='refresh'>Refresh</div>
+</div>

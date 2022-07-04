@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projekt AWWW</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+<!--    <link rel="stylesheet" href="{{ STATIC_URL }}/css/style.css"> -->
+</head>
+<!-- Remove class to get dark theme -->
+<body>
+
+    <div class="grid-container">
+        <div class="Menu-bar">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">Workspace</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+        <div class="Text-field">
+            <label for="code"></label>
+            <textarea spellcheck="false" id="code" name="code">{{ file }}</textarea>
+        </div>
+        <div class="Focus-bar">
+            <h4> Here you can choose focus:</h4><br>
+            <p>focus1</p><br>
+            <p>focus2</p><br>
+            <p>focus3</p><br>
+        </div>
+        <div class="File-selection">
+            {% include 'invarianterC/delete_dirs.html' %}
+        </div>
+        <div class="Data-tabs">
+            <div class="Overlap">Tab1</div>
+            <div class="Overlap">Tab2</div>
+            <div class="Overlap">Tab3</div>
+            <div class="Overlap">Tab4</div>
+        </div>
+        <div class="Tabs">
+            Some data 1<br>
+            Some data 2<br>
+            Some data 3<br>
+        </div>
+    </div>
+
+</body>
+</html>

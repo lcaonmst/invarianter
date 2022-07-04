@@ -1,0 +1,9 @@
+<h4 class="File-mode" style="font-size: 16px;">Here you will find all your files:</h4> <br>
+<div class="File-tree">
+        {% for section in recList %}
+                <div class="File-selection-files" id={{ section.0.name }} mytype={{ section.4 }} style="margin-left: {{ section.1 }}em">{{ section.0.name }}</div><br>
+                <!--<a href="#" class="File-selection-files File-selection-add" style="margin-left: {{ section.1|add:"1" }}em">Add+</a><br>-->
+        {% endfor %}
+
+</div>
+
